@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  *
  * @author User
  */
-public class AddCustomer extends javax.swing.JPanel {
+public class AddEmployee extends javax.swing.JPanel {
 
     public char[] Pa;
     public String ID;
@@ -31,7 +31,7 @@ public class AddCustomer extends javax.swing.JPanel {
     /**
      * Creates new form AddNewUser
      */
-    public AddCustomer() {
+    public AddEmployee() {
         initComponents();
 
         load();
