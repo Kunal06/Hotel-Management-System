@@ -16,8 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.StringTokenizer;
 import javax.swing.Timer;
-import static overtimemanagement.ReadWrite.WriteToFilenoID;
-import static overtimemanagement.ReadWrite.loadloggedinuser;
 
 /**
  *
@@ -34,10 +32,10 @@ public class Admin extends javax.swing.JFrame {
     public Admin() {
         initComponents();
 
-        name.setText(loadloggedinuser());
+        // name.setText(loadloggedinuser());
 
-        date = DateTime.getTodayDate();
-        dat.setText(date);
+  //      date = DateTime.getTodayDate();
+  //      dat.setText(date);
         Timer t = new Timer(1000, new Clockc());
         t.start();
         Connection conn = new DBconnect().connect();
@@ -185,17 +183,17 @@ public class Admin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
-        setContentPane(new OvertimeRequestsAdmin());
+        // setContentPane(new OvertimeRequestsAdmin());
         pack();          // TODO add your handling code here:
     }//GEN-LAST:event_jMenu2MouseClicked
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
         this.dispose();
-        new Loginpage().setVisible(true);        // TODO add your handling code here:
+        // new Loginpage().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_logoutMouseClicked
 
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
-        setContentPane(new AddProject());
+        setContentPane(new AddRoom());
         pack();     // TODO add your handling code here:
     }//GEN-LAST:event_jMenu5MouseClicked
 
@@ -205,7 +203,7 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        setContentPane(new EditUserDetails());
+        // setContentPane(new EditUserDetails());
         pack();          // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 

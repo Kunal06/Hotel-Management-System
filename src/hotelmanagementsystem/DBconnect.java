@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class DBconnect {
 
     private Connection DBConnection;
-    String url = "jdbc:mysql://localhost:3306/Hotel";
+    String url = "jdbc:mysql://localhost:3306/hotel";
      String dbName = "Hotel";
      String driver = "com.mysql.jdbc.Driver";
      String userName = "root";

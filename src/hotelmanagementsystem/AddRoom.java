@@ -5,19 +5,38 @@
  */
 package hotelmanagementsystem;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author User
  */
 public class AddRoom extends javax.swing.JPanel {
 
+      Connection conn = new DBconnect().connect();
+
     /**
      * Creates new form AddRoom
      */
     public AddRoom() {
         initComponents();
+        load();
     }
-
+    private void load(){
+        type1.removeAllItems();
+        type1.addItem("Select Room Type");
+        type1.addItem("Single");
+        type1.addItem("Double");
+        type1.addItem("Studio");
+        roomno1.setText("");
+        floorno1.setText("");
+        ppn1.setText("");
+        available.setText("Available");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,6 +49,14 @@ public class AddRoom extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        roomno1 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        type1 = new javax.swing.JComboBox();
+        floorno1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        ppn1 = new javax.swing.JTextField();
+        available = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 36)); // NOI18N
         jLabel1.setText("Add Room");
@@ -37,6 +64,51 @@ public class AddRoom extends javax.swing.JPanel {
         jLabel2.setText("Room No.");
 
         jLabel3.setText("Room Type");
+
+        roomno1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                roomno1ActionPerformed(evt);
+            }
+        });
+        roomno1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                roomno1KeyTyped(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                roomno1KeyReleased(evt);
+            }
+        });
+
+        jLabel4.setText("Floor No.");
+
+        type1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                type1ActionPerformed(evt);
+            }
+        });
+
+        floorno1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                floorno1ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("ADD");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Price per Night");
+
+        ppn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppn1ActionPerformed(evt);
+            }
+        });
+
+        available.setText("AVAILABLE/ NOT AVAILABLE");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -48,29 +120,158 @@ public class AddRoom extends javax.swing.JPanel {
                         .addGap(295, 295, 295)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(197, 197, 197)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))))
-                .addContainerGap(332, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(220, 220, 220)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(roomno1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(type1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(15, 15, 15)
+                        .addComponent(available, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(198, 198, 198)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(floorno1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(ppn1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(260, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(105, 105, 105)
                 .addComponent(jLabel1)
-                .addGap(49, 49, 49)
-                .addComponent(jLabel2)
-                .addGap(42, 42, 42)
-                .addComponent(jLabel3)
-                .addContainerGap(466, Short.MAX_VALUE))
+                .addGap(44, 44, 44)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(roomno1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(available))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(type1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(floorno1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(ppn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(59, 59, 59)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(273, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void roomno1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomno1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_roomno1ActionPerformed
+
+    private void floorno1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_floorno1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_floorno1ActionPerformed
+
+    private void type1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_type1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_type1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String roomno = roomno1.getText();
+        String type = "" + type1.getSelectedItem();
+        String floorno = floorno1.getText();
+        String ppn = ppn1.getText();
+        if (roomno.equals("")) {
+            JOptionPane.showMessageDialog(null, "Room number is required");
+        } else if (type.equals("Select Room Type")) {
+            JOptionPane.showMessageDialog(null, "Room type is required");
+        } else if (floorno.equals("")) {
+            JOptionPane.showMessageDialog(null, "Floor Number is required");
+        } else if (ppn.equals("")) {
+            JOptionPane.showMessageDialog(null, "Price per night is missing");
+        } else {
+            //Write
+            try {
+                PreparedStatement pa = conn.prepareStatement("insert into Rooms(Room_No,Floor_No,Type,PricePerNight) values (?,?,?,?)");
+
+                pa.setString(1, roomno);
+                pa.setString(2, floorno);
+                pa.setString(3, type);
+                pa.setString(4, ppn);
+                
+                int i = pa.executeUpdate();
+
+                if (i > 0) {
+                    JOptionPane.showMessageDialog((null), "saved");
+                } else {
+                    JOptionPane.showMessageDialog((null), "notsaved");
+
+                }
+            } catch (SQLException se) {
+                //Handle errors for JDBC
+                se.printStackTrace();
+            } catch (Exception e) {
+                //Handle errors for Class.forName
+                e.printStackTrace();
+            }
+            //Reload Panel
+            load();
+
+        }
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void ppn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppn1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ppn1ActionPerformed
+
+    private void roomno1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_roomno1KeyTyped
+    }//GEN-LAST:event_roomno1KeyTyped
+
+    private void roomno1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_roomno1KeyReleased
+String roomno = roomno1.getText();
+        String sql = "select Room_No from Room where Room_No= ? ";
+        
+        try {
+            PreparedStatement pa = conn.prepareStatement(sql);
+            pa.setString(1, roomno);
+            ResultSet rs = pa.executeQuery();
+            
+            available.setText("AVAILABLE");
+            while (rs.next()) {
+                available.setText("Already Created");
+                break;
+            }
+        } catch (Exception c) {
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_roomno1KeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel available;
+    private javax.swing.JTextField floorno1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JTextField ppn1;
+    private javax.swing.JTextField roomno1;
+    private javax.swing.JComboBox type1;
     // End of variables declaration//GEN-END:variables
 }
