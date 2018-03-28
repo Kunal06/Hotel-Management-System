@@ -42,7 +42,6 @@ public class AddEmployee extends javax.swing.JPanel {
         //Add Departments to Combobox
         position1.removeAllItems();
         position1.addItem("Select Department");
-        position1.addItem("Accounts");
         position1.addItem("Manager");
         position1.addItem("Hotel Manager");
         position1.addItem("Housekeeping");
@@ -57,7 +56,10 @@ public class AddEmployee extends javax.swing.JPanel {
         //reset all fields
         fname.setText("First");
         lname.setText("Last");
-        street1.setText("");
+        street1.setText("Street");
+        city1.setText("City");
+        prov1.setText("Province");
+        pc1.setText("PC");
         phone1.setText("");
         email1.setText("");
         user.setText("");
@@ -73,7 +75,10 @@ public class AddEmployee extends javax.swing.JPanel {
         String firstname = fname.getText();
         String lastname = lname.getText();
         String phone = phone1.getText();
-        String salary = street1.getText();
+        String street = street1.getText();
+        String city = city1.getText();
+        String prov = prov1.getText();
+        String pc = pc1.getText();
         String username = user.getText();
         String department = "" + position1.getSelectedItem();
         Pa = pas.getPassword();
@@ -82,7 +87,7 @@ public class AddEmployee extends javax.swing.JPanel {
         for (int i = 0; i < Pa.length; i++) {
             Password += Pa[i];
         }
-        String data = ID + "," + firstname + "," + lastname + "," + department + "," + salary + "," + phone + "," + email + "," + username + "," + Password;
+        // String data = ID + "," + firstname + "," + lastname + "," + department + "," + salary + "," + phone + "," + email + "," + username + "," + Password;
 
         //Check Validity
         if (firstname.equals("") || firstname.equals("First")) {
@@ -94,8 +99,14 @@ public class AddEmployee extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Department needs to be selected");
         } else if (phone.equals("")) {
             JOptionPane.showMessageDialog(null, "Phone no. is required");
-        } else if (salary.equals("")) {
-            JOptionPane.showMessageDialog(null, "Salary is required");
+        } else if (street.equals("") || street.equals("Street")) {
+            JOptionPane.showMessageDialog(null, "Street is required");
+        } else if (city.equals("") || city.equals("City")) {
+            JOptionPane.showMessageDialog(null, "City is required");
+        } else if (prov.equals("") || prov.equals("Province")) {
+            JOptionPane.showMessageDialog(null, "Province is required");
+        } else if (pc.equals("") || pc.equals("Postal Code")) {
+            JOptionPane.showMessageDialog(null, "Postal Code is required");
         } else if (valid.equals("Invalid Email Address")) {
             JOptionPane.showMessageDialog(null, valid);
         } else if (username.equals("")) {
@@ -122,7 +133,10 @@ public class AddEmployee extends javax.swing.JPanel {
         String firstname = fname.getText();
         String lastname = lname.getText();
         String phone = phone1.getText();
-        String salary = street1.getText();
+        String street = street1.getText();
+        String city = city1.getText();
+        String prov = prov1.getText();
+        String pc = pc1.getText();
         String username = user.getText();
         String department = "" + position1.getSelectedItem();
         Pa = pas.getPassword();
@@ -131,7 +145,7 @@ public class AddEmployee extends javax.swing.JPanel {
         for (int i = 0; i < Pa.length; i++) {
             Password += Pa[i];
         }
-        String data = ID + "," + firstname + "," + lastname + "," + department + "," + salary + "," + phone + "," + email + "," + username + "," + Password;
+        // String data = ID + "," + firstname + "," + lastname + "," + department + "," + salary + "," + phone + "," + email + "," + username + "," + Password;
 
         //Check Validity
         if (firstname.equals("") || firstname.equals("First")) {
@@ -143,8 +157,14 @@ public class AddEmployee extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Department needs to be selected");
         } else if (phone.equals("")) {
             JOptionPane.showMessageDialog(null, "Phone no. is required");
-        } else if (salary.equals("")) {
-            JOptionPane.showMessageDialog(null, "Salary is required");
+        } else if (street.equals("") || street.equals("Street")) {
+            JOptionPane.showMessageDialog(null, "Street is required");
+        } else if (city.equals("") || city.equals("City")) {
+            JOptionPane.showMessageDialog(null, "City is required");
+        } else if (prov.equals("") || prov.equals("Province")) {
+            JOptionPane.showMessageDialog(null, "Province is required");
+        } else if (pc.equals("") || pc.equals("Postal Code")) {
+            JOptionPane.showMessageDialog(null, "Postal Code is required");
         } else if (valid.equals("Invalid Email Address")) {
             JOptionPane.showMessageDialog(null, valid);
         } else if (username.equals("")) {
@@ -154,16 +174,19 @@ public class AddEmployee extends javax.swing.JPanel {
         } else {
             //Write
             try {
-                PreparedStatement pa = conn.prepareStatement("insert into users(Firstname,Lastname,Department,Salary,Phone,Email,username,password) values (?,?,?,?,?,?,?,?,?)");
+                PreparedStatement pa = conn.prepareStatement("insert into Employee(First_Name,Last_Name,Department,Street,City,Province,PC,Phone,Email,Username,Password) values (?,?,?,?,?,?,?,?,?,?,?)");
 
                 pa.setString(1, firstname);
                 pa.setString(2, lastname);
                 pa.setString(3, department);
-                pa.setString(4, salary);
-                pa.setString(5, phone);
-                pa.setString(6, email);
-                pa.setString(7, username);
-                pa.setString(8, Password);
+                pa.setString(4, street);
+                pa.setString(5, city);
+                pa.setString(6, prov);
+                pa.setString(7, pc);
+                pa.setString(8, phone);
+                pa.setString(9, email);
+                pa.setString(10, username);
+                pa.setString(11, Password);
 
                 int i = pa.executeUpdate();
 
@@ -278,6 +301,11 @@ public class AddEmployee extends javax.swing.JPanel {
 
         jLabel10.setText("Password");
 
+        street1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                street1MouseClicked(evt);
+            }
+        });
         street1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 street1KeyTyped(evt);
@@ -288,18 +316,33 @@ public class AddEmployee extends javax.swing.JPanel {
 
         dat.setText("Current Date");
 
+        prov1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                prov1MouseClicked(evt);
+            }
+        });
         prov1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 prov1KeyTyped(evt);
             }
         });
 
+        city1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                city1MouseClicked(evt);
+            }
+        });
         city1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 city1KeyTyped(evt);
             }
         });
 
+        pc1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pc1MouseClicked(evt);
+            }
+        });
         pc1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 pc1KeyTyped(evt);
@@ -467,7 +510,7 @@ public class AddEmployee extends javax.swing.JPanel {
     }//GEN-LAST:event_lnameMouseClicked
 
     private void street1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_street1KeyTyped
-        onlyint(evt);     // TODO add your handling code here:
+            // TODO add your handling code here:
     }//GEN-LAST:event_street1KeyTyped
 
     private void prov1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_prov1KeyTyped
@@ -481,6 +524,34 @@ public class AddEmployee extends javax.swing.JPanel {
     private void pc1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pc1KeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_pc1KeyTyped
+
+    private void street1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_street1MouseClicked
+      String street = street1.getText();
+        if (street.equals("Street")) {
+            street1.setText("");
+        }     // TODO add your handling code here:
+    }//GEN-LAST:event_street1MouseClicked
+
+    private void city1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_city1MouseClicked
+     String city = city1.getText();
+        if (city.equals("City")) {
+            city1.setText("");
+        }   // TODO add your handling code here:
+    }//GEN-LAST:event_city1MouseClicked
+
+    private void prov1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prov1MouseClicked
+     String prov = prov1.getText();
+        if (prov.equals("City")) {
+            prov1.setText("");
+        }    // TODO add your handling code here:
+    }//GEN-LAST:event_prov1MouseClicked
+
+    private void pc1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pc1MouseClicked
+    String pc = pc1.getText();
+        if (pc.equals("City")) {
+            pc1.setText("");
+        }     // TODO add your handling code here:
+    }//GEN-LAST:event_pc1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

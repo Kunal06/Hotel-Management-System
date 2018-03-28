@@ -42,7 +42,6 @@ public class AddCustomer extends javax.swing.JPanel {
         //Add Departments to Combobox
         position1.removeAllItems();
         position1.addItem("Select Department");
-        position1.addItem("Accounts");
         position1.addItem("Manager");
         position1.addItem("Hotel Manager");
         position1.addItem("Housekeeping");
@@ -57,12 +56,12 @@ public class AddCustomer extends javax.swing.JPanel {
         //reset all fields
         fname.setText("First");
         lname.setText("Last");
-        street1.setText("");
+        street1.setText("Street");
+        city1.setText("City");
+        prov1.setText("Province");
+        pc1.setText("PC");
         phone1.setText("");
         email1.setText("");
-        user.setText("");
-        pas.setText("");
-
     }
 
     private void GetDatathenCheckandWrite() {
@@ -73,16 +72,12 @@ public class AddCustomer extends javax.swing.JPanel {
         String firstname = fname.getText();
         String lastname = lname.getText();
         String phone = phone1.getText();
-        String salary = street1.getText();
-        String username = user.getText();
+        String street = street1.getText();
+        String city = city1.getText();
+        String prov = prov1.getText();
+        String pc = pc1.getText();
         String department = "" + position1.getSelectedItem();
-        Pa = pas.getPassword();
-        String Password = "";
-        System.out.println(Password);
-        for (int i = 0; i < Pa.length; i++) {
-            Password += Pa[i];
-        }
-        String data = ID + "," + firstname + "," + lastname + "," + department + "," + salary + "," + phone + "," + email + "," + username + "," + Password;
+        // String data = ID + "," + firstname + "," + lastname + "," + department + "," + salary + "," + phone + "," + email + "," + username + "," + Password;
 
         //Check Validity
         if (firstname.equals("") || firstname.equals("First")) {
@@ -94,14 +89,16 @@ public class AddCustomer extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Department needs to be selected");
         } else if (phone.equals("")) {
             JOptionPane.showMessageDialog(null, "Phone no. is required");
-        } else if (salary.equals("")) {
-            JOptionPane.showMessageDialog(null, "Salary is required");
+        } else if (street.equals("") || street.equals("Street")) {
+            JOptionPane.showMessageDialog(null, "Street is required");
+        } else if (city.equals("") || city.equals("City")) {
+            JOptionPane.showMessageDialog(null, "City is required");
+        } else if (prov.equals("") || prov.equals("Province")) {
+            JOptionPane.showMessageDialog(null, "Province is required");
+        } else if (pc.equals("") || pc.equals("Postal Code")) {
+            JOptionPane.showMessageDialog(null, "Postal Code is required");
         } else if (valid.equals("Invalid Email Address")) {
             JOptionPane.showMessageDialog(null, valid);
-        } else if (username.equals("")) {
-            JOptionPane.showMessageDialog(null, "Username is required");
-        } else if (Password.equals("")) {
-            JOptionPane.showMessageDialog(null, "Password is required");
         } else {
 
             //Write
@@ -122,16 +119,17 @@ public class AddCustomer extends javax.swing.JPanel {
         String firstname = fname.getText();
         String lastname = lname.getText();
         String phone = phone1.getText();
-        String salary = street1.getText();
-        String username = user.getText();
+        String street = street1.getText();
+        String city = city1.getText();
+        String prov = prov1.getText();
+        String pc = pc1.getText();
         String department = "" + position1.getSelectedItem();
-        Pa = pas.getPassword();
         String Password = "";
         System.out.println(Password);
         for (int i = 0; i < Pa.length; i++) {
             Password += Pa[i];
         }
-        String data = ID + "," + firstname + "," + lastname + "," + department + "," + salary + "," + phone + "," + email + "," + username + "," + Password;
+        // String data = ID + "," + firstname + "," + lastname + "," + department + "," + salary + "," + phone + "," + email + "," + username + "," + Password;
 
         //Check Validity
         if (firstname.equals("") || firstname.equals("First")) {
@@ -143,27 +141,30 @@ public class AddCustomer extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Department needs to be selected");
         } else if (phone.equals("")) {
             JOptionPane.showMessageDialog(null, "Phone no. is required");
-        } else if (salary.equals("")) {
-            JOptionPane.showMessageDialog(null, "Salary is required");
+        } else if (street.equals("") || street.equals("Street")) {
+            JOptionPane.showMessageDialog(null, "Street is required");
+        } else if (city.equals("") || city.equals("City")) {
+            JOptionPane.showMessageDialog(null, "City is required");
+        } else if (prov.equals("") || prov.equals("Province")) {
+            JOptionPane.showMessageDialog(null, "Province is required");
+        } else if (pc.equals("") || pc.equals("Postal Code")) {
+            JOptionPane.showMessageDialog(null, "Postal Code is required");
         } else if (valid.equals("Invalid Email Address")) {
             JOptionPane.showMessageDialog(null, valid);
-        } else if (username.equals("")) {
-            JOptionPane.showMessageDialog(null, "Username is required");
-        } else if (Password.equals("")) {
-            JOptionPane.showMessageDialog(null, "Password is required");
         } else {
             //Write
             try {
-                PreparedStatement pa = conn.prepareStatement("insert into users(Firstname,Lastname,Department,Salary,Phone,Email,username,password) values (?,?,?,?,?,?,?,?,?)");
+                PreparedStatement pa = conn.prepareStatement("insert into Customer(First_Name,Last_Name,Department,Street,City,Province,PC,Phone,Email,Username,Password) values (?,?,?,?,?,?,?,?,?)");
 
                 pa.setString(1, firstname);
                 pa.setString(2, lastname);
                 pa.setString(3, department);
-                pa.setString(4, salary);
-                pa.setString(5, phone);
-                pa.setString(6, email);
-                pa.setString(7, username);
-                pa.setString(8, Password);
+                pa.setString(4, street);
+                pa.setString(5, city);
+                pa.setString(6, prov);
+                pa.setString(7, pc);
+                pa.setString(8, phone);
+                pa.setString(9, email);
 
                 int i = pa.executeUpdate();
 
@@ -210,20 +211,16 @@ public class AddCustomer extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         email1 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        user = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         street1 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         dat = new javax.swing.JLabel();
-        pas = new javax.swing.JPasswordField();
         jLabel6 = new javax.swing.JLabel();
         prov1 = new javax.swing.JTextField();
         city1 = new javax.swing.JTextField();
         pc1 = new javax.swing.JTextField();
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel1.setText("Add User");
+        jLabel1.setText("Add Customer");
 
         jLabel2.setText("Name");
 
@@ -274,10 +271,11 @@ public class AddCustomer extends javax.swing.JPanel {
 
         jLabel8.setText("Email Address");
 
-        jLabel9.setText("Username");
-
-        jLabel10.setText("Password");
-
+        street1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                street1MouseClicked(evt);
+            }
+        });
         street1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 street1KeyTyped(evt);
@@ -288,18 +286,33 @@ public class AddCustomer extends javax.swing.JPanel {
 
         dat.setText("Current Date");
 
+        prov1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                prov1MouseClicked(evt);
+            }
+        });
         prov1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 prov1KeyTyped(evt);
             }
         });
 
+        city1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                city1MouseClicked(evt);
+            }
+        });
         city1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 city1KeyTyped(evt);
             }
         });
 
+        pc1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pc1MouseClicked(evt);
+            }
+        });
         pc1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 pc1KeyTyped(evt);
@@ -321,9 +334,6 @@ public class AddCustomer extends javax.swing.JPanel {
                 .addComponent(idd)
                 .addGap(18, 18, 18)
                 .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(526, 526, 526)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(461, 461, 461)
                 .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -355,15 +365,10 @@ public class AddCustomer extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(pc1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(phone1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(email1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(176, 176, 176)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pas, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(email1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(526, 526, 526)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -389,24 +394,10 @@ public class AddCustomer extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(street1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel11)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(fname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(10, 10, 10)
-                                            .addComponent(jLabel9))
-                                        .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(34, 34, 34)
-                                        .addComponent(jLabel10))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(24, 24, 24)
-                                        .addComponent(pas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(fname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(city1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -467,7 +458,7 @@ public class AddCustomer extends javax.swing.JPanel {
     }//GEN-LAST:event_lnameMouseClicked
 
     private void street1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_street1KeyTyped
-        onlyint(evt);     // TODO add your handling code here:
+            // TODO add your handling code here:
     }//GEN-LAST:event_street1KeyTyped
 
     private void prov1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_prov1KeyTyped
@@ -482,6 +473,34 @@ public class AddCustomer extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_pc1KeyTyped
 
+    private void street1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_street1MouseClicked
+      String street = street1.getText();
+        if (street.equals("Street")) {
+            street1.setText("");
+        }     // TODO add your handling code here:
+    }//GEN-LAST:event_street1MouseClicked
+
+    private void city1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_city1MouseClicked
+     String city = city1.getText();
+        if (city.equals("City")) {
+            city1.setText("");
+        }   // TODO add your handling code here:
+    }//GEN-LAST:event_city1MouseClicked
+
+    private void prov1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prov1MouseClicked
+     String prov = prov1.getText();
+        if (prov.equals("City")) {
+            prov1.setText("");
+        }    // TODO add your handling code here:
+    }//GEN-LAST:event_prov1MouseClicked
+
+    private void pc1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pc1MouseClicked
+    String pc = pc1.getText();
+        if (pc.equals("City")) {
+            pc1.setText("");
+        }     // TODO add your handling code here:
+    }//GEN-LAST:event_pc1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField city1;
@@ -491,7 +510,6 @@ public class AddCustomer extends javax.swing.JPanel {
     private javax.swing.JTextField id;
     private javax.swing.JLabel idd;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -499,15 +517,12 @@ public class AddCustomer extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField lname;
-    private javax.swing.JPasswordField pas;
     private javax.swing.JTextField pc1;
     private javax.swing.JTextField phone1;
     private javax.swing.JComboBox position1;
     private javax.swing.JTextField prov1;
     private javax.swing.JButton save;
     private javax.swing.JTextField street1;
-    private javax.swing.JTextField user;
     // End of variables declaration//GEN-END:variables
 }

@@ -31,10 +31,6 @@
               <Component id="id" min="-2" pref="106" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="526" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" pref="82" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="461" max="-2" attributes="0"/>
               <Component id="save" min="-2" pref="211" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
@@ -73,16 +69,10 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="176" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="8" pref="8" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="user" min="-2" pref="79" max="-2" attributes="0"/>
-                  <Component id="pas" min="-2" pref="79" max="-2" attributes="0"/>
-              </Group>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="526" max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" pref="159" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -114,31 +104,10 @@
                                   <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel2" alignment="0" min="-2" pref="27" max="-2" attributes="0"/>
-                                      <Component id="fname" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lname" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                          <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="user" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                                      <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                                      <Component id="pas" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                          <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                              <Component id="jLabel2" alignment="0" min="-2" pref="27" max="-2" attributes="0"/>
+                              <Component id="fname" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="lname" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -183,7 +152,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="18" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Add User"/>
+        <Property name="text" type="java.lang.String" value="Add Customer"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
@@ -258,20 +227,9 @@
         <Property name="text" type="java.lang.String" value="Email Address"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="user">
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel9">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Username"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel10">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Password"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JTextField" name="street1">
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="street1MouseClicked"/>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="street1KeyTyped"/>
       </Events>
     </Component>
@@ -285,22 +243,23 @@
         <Property name="text" type="java.lang.String" value="Current Date"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="pas">
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
     </Component>
     <Component class="javax.swing.JTextField" name="prov1">
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="prov1MouseClicked"/>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="prov1KeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="city1">
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="city1MouseClicked"/>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="city1KeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="pc1">
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pc1MouseClicked"/>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="pc1KeyTyped"/>
       </Events>
     </Component>

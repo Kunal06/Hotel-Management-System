@@ -272,6 +272,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="street1">
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="street1MouseClicked"/>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="street1KeyTyped"/>
       </Events>
     </Component>
@@ -291,16 +292,19 @@
     </Component>
     <Component class="javax.swing.JTextField" name="prov1">
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="prov1MouseClicked"/>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="prov1KeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="city1">
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="city1MouseClicked"/>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="city1KeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="pc1">
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pc1MouseClicked"/>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="pc1KeyTyped"/>
       </Events>
     </Component>
