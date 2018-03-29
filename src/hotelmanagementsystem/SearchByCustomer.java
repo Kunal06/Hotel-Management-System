@@ -31,7 +31,7 @@ Connection conn = new DBconnect().connect();
         customer.removeAllItems();
         customer.addItem("Select Customer");
 
-        String getcustomer = "select First_Name, Last_Name from Project";
+        String getcustomer = "select First_Name, Last_Name from Customer";
         try {
             PreparedStatement pa = conn.prepareStatement(getcustomer);
             ResultSet rs = pa.executeQuery();
@@ -43,7 +43,37 @@ Connection conn = new DBconnect().connect();
         } catch (Exception c) {
         }
     }
+    
+    private void loadCustomerDetails(){
+        String first ="";
+        String last =""; 
+        String Street= "";
+        String City= "";
+        String Province= "";
+        String PC= "";
+        String Phone="";
+        String Email="";
+        
+        String Customer = ""+ customer.getSelectedItem();
+        String[] name = Customer.split(" ");
 
+        String getcustomer = "select * from Customer where First_Name= ? AND Last_Name= ? ";
+        try {
+            PreparedStatement pa = conn.prepareStatement(getcustomer);
+            ResultSet rs = pa.executeQuery();
+            while (rs.next()) {
+                first = rs.getString("First_Name");
+                last = rs.getString("Last_Name");
+                Street = rs.getString("Street");
+                City = rs.getString("City");
+                Province = rs.getString("Province");
+                PC = rs.getString("PC");
+                Phone = rs.getString("Phone");
+                Email = rs.getString("Email");
+            }
+        } catch (Exception c) {
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -192,6 +222,12 @@ Connection conn = new DBconnect().connect();
             }
         ));
         jScrollPane1.setViewportView(reserve1);
+
+        customer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customerActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -380,6 +416,10 @@ Connection conn = new DBconnect().connect();
 
         // TODO add your handling code here:
     }//GEN-LAST:event_fnameMouseClicked
+
+    private void customerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_customerActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

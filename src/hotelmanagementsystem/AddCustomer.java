@@ -114,11 +114,7 @@ public class AddCustomer extends javax.swing.JPanel {
         String city = city1.getText();
         String prov = prov1.getText();
         String pc = pc1.getText();
-        String Password = "";
-        System.out.println(Password);
-        for (int i = 0; i < Pa.length; i++) {
-            Password += Pa[i];
-        }
+        
         // String data = ID + "," + firstname + "," + lastname + "," + department + "," + salary + "," + phone + "," + email + "," + username + "," + Password;
 
         //Check Validity
@@ -142,7 +138,7 @@ public class AddCustomer extends javax.swing.JPanel {
         } else {
             //Write
             try {
-                PreparedStatement pa = conn.prepareStatement("insert into Customer(First_Name,Last_Name,Street,City,Province,PC,Phone,Email,Username,Password) values (?,?,?,?,?,?,?,?,?)");
+                PreparedStatement pa = conn.prepareStatement("insert into Customer(First_Name,Last_Name,Street,City,Province,PC,Phone,Email) values (?,?,?,?,?,?,?,?)");
 
                 pa.setString(1, firstname);
                 pa.setString(2, lastname);
