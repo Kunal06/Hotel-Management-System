@@ -77,10 +77,13 @@ public class Admin extends javax.swing.JFrame {
         wel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        AddEmployee = new javax.swing.JMenuItem();
+        AddCustomer = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
+        CustomerSearch = new javax.swing.JMenuItem();
+        RoomSearch = new javax.swing.JMenuItem();
         logout = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -100,13 +103,21 @@ public class Admin extends javax.swing.JFrame {
 
         jMenu4.setText("User");
 
-        jMenuItem2.setText("Add New Employee");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        AddEmployee.setText("Add Employee");
+        AddEmployee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                AddEmployeeActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem2);
+        jMenu4.add(AddEmployee);
+
+        AddCustomer.setText("Add Customer");
+        AddCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddCustomerActionPerformed(evt);
+            }
+        });
+        jMenu4.add(AddCustomer);
 
         jMenuItem1.setText("Edit User Details");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -126,13 +137,25 @@ public class Admin extends javax.swing.JFrame {
         });
         jMenuBar1.add(jMenu5);
 
-        jMenu2.setText("View Overtime Requests");
-        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu2MouseClicked(evt);
+        jMenu1.setText("Search");
+
+        CustomerSearch.setText("ByCustomer");
+        CustomerSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CustomerSearchActionPerformed(evt);
             }
         });
-        jMenuBar1.add(jMenu2);
+        jMenu1.add(CustomerSearch);
+
+        RoomSearch.setText("ByRoom");
+        RoomSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RoomSearchActionPerformed(evt);
+            }
+        });
+        jMenu1.add(RoomSearch);
+
+        jMenuBar1.add(jMenu1);
 
         logout.setText("Logout");
         logout.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -182,11 +205,6 @@ public class Admin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
-        // setContentPane(new OvertimeRequestsAdmin());
-        pack();          // TODO add your handling code here:
-    }//GEN-LAST:event_jMenu2MouseClicked
-
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
         this.dispose();
         // new Loginpage().setVisible(true);        // TODO add your handling code here:
@@ -197,15 +215,33 @@ public class Admin extends javax.swing.JFrame {
         pack();     // TODO add your handling code here:
     }//GEN-LAST:event_jMenu5MouseClicked
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void AddEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddEmployeeActionPerformed
         setContentPane(new AddEmployee());
         pack();         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_AddEmployeeActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // setContentPane(new EditUserDetails());
         pack();          // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void RoomSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoomSearchActionPerformed
+        // TODO add your handling code here:
+        setContentPane(new SearchByRoom());
+        pack();  
+    }//GEN-LAST:event_RoomSearchActionPerformed
+
+    private void CustomerSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerSearchActionPerformed
+        // TODO add your handling code here:
+        setContentPane(new SearchByCustomer());
+        pack(); 
+    }//GEN-LAST:event_CustomerSearchActionPerformed
+
+    private void AddCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddCustomerActionPerformed
+        // TODO add your handling code here:
+        setContentPane(new AddCustomer());
+        pack(); 
+    }//GEN-LAST:event_AddCustomerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,13 +282,16 @@ public class Admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem AddCustomer;
+    private javax.swing.JMenuItem AddEmployee;
+    private javax.swing.JMenuItem CustomerSearch;
+    private javax.swing.JMenuItem RoomSearch;
     private javax.swing.JLabel dat;
-    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenu logout;
     private javax.swing.JLabel name;
     private javax.swing.JLabel tim;
