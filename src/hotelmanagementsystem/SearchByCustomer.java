@@ -34,21 +34,23 @@ public class SearchByCustomer extends javax.swing.JPanel {
         load();
     }
     private void maxaveragespentbyallcustomers(){
-        DefaultTableModel Model;
-        Model = (DefaultTableModel) reserve1.getModel();
-        Model.setRowCount(0);
+        DefaultTableModel Model2;
+        Model2 = (DefaultTableModel) reserve2.getModel();
+        Model2.setRowCount(0);
         String first = "";
         String last = "";
         int maxavg=0;
-        String nestedsql= " select First_Name, Max(Average) as maxavg from  (select First_Name, Last_Name,AVG(Cost) as Average from Reservation inner join Customer on Customer = ID Group by ID ) AS temp Group by First_Name";
+        String nestedsql= "select First_Name,Last_Name, Max(Average) as maxavg from  (select First_Name, Last_Name,AVG(Cost) as Average from Reservation inner join Customer on Customer = ID Group by ID ) AS temp Group by First_Name, Last_Name";
         try {
             PreparedStatement pa = conn.prepareStatement(nestedsql);
             ResultSet rs = pa.executeQuery();
             while (rs.next()) {
+                System.out.println("REACHING");
                 first = rs.getString("First_Name");
+                System.out.println(first);
                 last = rs.getString("Last_Name");
                 maxavg= rs.getInt("Average");
-                Model.insertRow(Model.getRowCount(), new Object[]{first,last,maxavg});
+                Model2.insertRow(Model2.getRowCount(), new Object[]{first,last,maxavg});
                 
             }
         } catch (Exception c) {
@@ -505,18 +507,19 @@ public class SearchByCustomer extends javax.swing.JPanel {
                                 .addComponent(jButton2)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(640, 640, 640))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addGap(263, 263, 263)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(640, 640, 640))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(279, 279, 279)
+                        .addComponent(jLabel3))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
