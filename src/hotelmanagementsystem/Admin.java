@@ -31,7 +31,7 @@ public class Admin extends javax.swing.JFrame {
      */
     public Admin() {
         initComponents();
-
+System.setProperty("java.awt.headless", "false");
         // name.setText(loadloggedinuser());
 
   //      date = DateTime.getTodayDate();
