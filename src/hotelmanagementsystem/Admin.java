@@ -79,8 +79,8 @@ public class Admin extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         AddEmployee = new javax.swing.JMenuItem();
         AddCustomer = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
+        AssignRoom = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
         CustomerSearch = new javax.swing.JMenuItem();
         RoomSearch = new javax.swing.JMenuItem();
@@ -119,23 +119,23 @@ public class Admin extends javax.swing.JFrame {
         });
         jMenu4.add(AddCustomer);
 
-        jMenuItem1.setText("Edit User Details");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItem1);
-
-        jMenuBar1.add(jMenu4);
-
         jMenu5.setText("Add Room");
         jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenu5MouseClicked(evt);
             }
         });
-        jMenuBar1.add(jMenu5);
+        jMenu4.add(jMenu5);
+
+        jMenuBar1.add(jMenu4);
+
+        AssignRoom.setText("Assign Room");
+        AssignRoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AssignRoomActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(AssignRoom);
 
         jMenu1.setText("Search");
 
@@ -220,11 +220,6 @@ public class Admin extends javax.swing.JFrame {
         pack();         // TODO add your handling code here:
     }//GEN-LAST:event_AddEmployeeActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // setContentPane(new EditUserDetails());
-        pack();          // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
     private void RoomSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoomSearchActionPerformed
         // TODO add your handling code here:
         setContentPane(new SearchByRoom());
@@ -242,6 +237,11 @@ public class Admin extends javax.swing.JFrame {
         setContentPane(new AddCustomer());
         pack(); 
     }//GEN-LAST:event_AddCustomerActionPerformed
+
+    private void AssignRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AssignRoomActionPerformed
+      setContentPane(new AssignRooms());
+        pack();   // TODO add your handling code here:
+    }//GEN-LAST:event_AssignRoomActionPerformed
 
     /**
      * @param args the command line arguments
@@ -284,6 +284,7 @@ public class Admin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AddCustomer;
     private javax.swing.JMenuItem AddEmployee;
+    private javax.swing.JMenu AssignRoom;
     private javax.swing.JMenuItem CustomerSearch;
     private javax.swing.JMenuItem RoomSearch;
     private javax.swing.JLabel dat;
@@ -291,7 +292,6 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu logout;
     private javax.swing.JLabel name;
     private javax.swing.JLabel tim;

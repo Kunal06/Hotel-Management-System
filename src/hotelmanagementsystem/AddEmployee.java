@@ -67,63 +67,7 @@ public class AddEmployee extends javax.swing.JPanel {
 
     }
 
-    private void GetDatathenCheckandWrite() {
-        //Get DATA from fields
-        String email = email1.getText();
-        Email useremail = new Email(email);
-        String valid = useremail.validateEmailAddress();
-        String firstname = fname.getText();
-        String lastname = lname.getText();
-        String phone = phone1.getText();
-        String street = street1.getText();
-        String city = city1.getText();
-        String prov = prov1.getText();
-        String pc = pc1.getText();
-        String username = user.getText();
-        String department = "" + position1.getSelectedItem();
-        Pa = pas.getPassword();
-        String Password = "";
-        System.out.println(Password);
-        for (int i = 0; i < Pa.length; i++) {
-            Password += Pa[i];
-        }
-        // String data = ID + "," + firstname + "," + lastname + "," + department + "," + salary + "," + phone + "," + email + "," + username + "," + Password;
-
-        //Check Validity
-        if (firstname.equals("") || firstname.equals("First")) {
-            JOptionPane.showMessageDialog(null, "First name is required");
-        }
-        if (lastname.equals("") || lastname.equals("Last")) {
-            JOptionPane.showMessageDialog(null, "Last name is required");
-        } else if (department.equals("Select Department")) {
-            JOptionPane.showMessageDialog(null, "Department needs to be selected");
-        } else if (phone.equals("")) {
-            JOptionPane.showMessageDialog(null, "Phone no. is required");
-        } else if (street.equals("") || street.equals("Street")) {
-            JOptionPane.showMessageDialog(null, "Street is required");
-        } else if (city.equals("") || city.equals("City")) {
-            JOptionPane.showMessageDialog(null, "City is required");
-        } else if (prov.equals("") || prov.equals("Province")) {
-            JOptionPane.showMessageDialog(null, "Province is required");
-        } else if (pc.equals("") || pc.equals("Postal Code")) {
-            JOptionPane.showMessageDialog(null, "Postal Code is required");
-        } else if (valid.equals("Invalid Email Address")) {
-            JOptionPane.showMessageDialog(null, valid);
-        } else if (username.equals("")) {
-            JOptionPane.showMessageDialog(null, "Username is required");
-        } else if (Password.equals("")) {
-            JOptionPane.showMessageDialog(null, "Password is required");
-        } else {
-
-            //Write
-            //WriteToFile("userfile.txt", "userID.txt", data, ID);
-
-            //Reload Panel
-            load();
-
-        }
-
-    }
+    
 
     private void GetDatathenCheckandWriteDatabase() {
         //Get DATA from fields
