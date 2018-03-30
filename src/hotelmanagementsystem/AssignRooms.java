@@ -27,7 +27,7 @@ Connection conn = new DBconnect().connect();
     public AssignRooms() {
         initComponents();
         load();
-        loadCustomer();
+        
     }
     private void load(){
         customer.removeAllItems();
@@ -50,6 +50,7 @@ Connection conn = new DBconnect().connect();
         ppn1.setText("");
         custid1.setVisible(false);
         ppn1.setVisible(false);
+        loadCustomer();
     }
     
     private void loadRoomNumber(String type){

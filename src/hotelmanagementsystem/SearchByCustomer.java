@@ -8,27 +8,52 @@ package hotelmanagementsystem;
 import static hotelmanagementsystem.Fieldsdata.autocapitalizefirstletter;
 import static hotelmanagementsystem.Fieldsdata.onlyint;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author User
  */
 public class SearchByCustomer extends javax.swing.JPanel {
-Connection conn = new DBconnect().connect();
+
+    Connection conn = new DBconnect().connect();
+
     /**
      * Creates new form SearchByCustomer
      */
     public SearchByCustomer() {
         initComponents();
-        disableAll();
+       // disableAll();
+        custid.setVisible(false);
         loadCustomer();
+        load();
     }
-     //Add Customer to Customer combo
-    private void loadCustomer(){
-        String first ="";
-        String last =""; 
+    private void load() {
+
+       DefaultTableModel Model;
+        Model = (DefaultTableModel) reserve1.getModel();
+        Model.setRowCount(0);
+        //reset all fields
+        fname.setText("First");
+        lname.setText("Last");
+        street1.setText("Street");
+        city1.setText("City");
+        prov1.setText("Province");
+        pc1.setText("PC");
+        phone1.setText("");
+        email1.setText("");
+        
+    }
+    //Add Customer to Customer combo
+
+    private void loadCustomer() {
+        String first = "";
+        String last = "";
         customer.removeAllItems();
         customer.addItem("Select Customer");
 
@@ -39,23 +64,26 @@ Connection conn = new DBconnect().connect();
             while (rs.next()) {
                 first = rs.getString("First_Name");
                 last = rs.getString("Last_Name");
-                    customer.addItem(first+" "+last);
+                customer.addItem(first + " " + last);
             }
         } catch (Exception c) {
         }
     }
+
     //Load Customer details to fields
-    private void loadCustomerDetails(){
-        String first ="";
-        String last =""; 
-        String Street= "";
-        String City= "";
-        String Province= "";
-        String PC= "";
-        String Phone="";
-        String Email="";
-        
-        String Customer = ""+ customer.getSelectedItem();
+
+    private void loadCustomerDetails() {
+        String first = "";
+        String last = "";
+        String Street = "";
+        String City = "";
+        String Province = "";
+        String PC = "";
+        String Phone = "";
+        String Email = "";
+        int id = 0;
+
+        String Customer = "" + customer.getSelectedItem();
         String[] name = Customer.split(" ");
 
         String getcustomer = "select * from Customer where First_Name= ? AND Last_Name= ? ";
@@ -65,6 +93,8 @@ Connection conn = new DBconnect().connect();
             pa.setString(2, name[1]);
             ResultSet rs = pa.executeQuery();
             while (rs.next()) {
+
+                id = rs.getInt("ID");
                 first = rs.getString("First_Name");
                 last = rs.getString("Last_Name");
                 Street = rs.getString("Street");
@@ -74,6 +104,7 @@ Connection conn = new DBconnect().connect();
                 Phone = rs.getString("Phone");
                 Email = rs.getString("Email");
             }
+            custid.setText("" + id);
             fname.setText(first);
             lname.setText(last);
             street1.setText(Street);
@@ -82,13 +113,14 @@ Connection conn = new DBconnect().connect();
             pc1.setText(PC);
             phone1.setText(Phone);
             email1.setText(Email);
-            
+
         } catch (Exception c) {
         }
     }
-    
+
     //Disable all fields
-    private void disableAll(){
+    private void disableAll() {
+        // custid.setVisible(false);
         fname.setEnabled(false);
         lname.setEnabled(false);
         street1.setEnabled(false);
@@ -97,8 +129,126 @@ Connection conn = new DBconnect().connect();
         pc1.setEnabled(false);
         phone1.setEnabled(false);
         email1.setEnabled(false);
-        
+
     }
+
+    private void readrequestsintotable() {
+        DefaultTableModel Model;
+        Model = (DefaultTableModel) reserve1.getModel();
+        Model.setRowCount(0);
+        //Model.insertRow(Model.getRowCount(), new Object[]{"", "", "","", "", "", "", "", "", "", "","", ""});
+                int id= Integer.parseInt(custid.getText());
+
+        String sqlor = "select * from Reservation where Customer= ? ";
+
+        try {
+            PreparedStatement pa = conn.prepareStatement(sqlor);
+            pa.setInt(1,id);
+            ResultSet rs = pa.executeQuery();
+
+            while (rs.next()) {
+                int ReservationID = rs.getInt("ReservationID");
+                int Customer = rs.getInt("Customer");
+                String Room_Type = rs.getString("Room_Type");
+                String Room_Number = rs.getString("Room_Number");
+                String CreditCard_Number = rs.getString("CreditCard_Number");
+                String Expiry = rs.getString("Expiry");
+                Date Date_From = rs.getDate("Date_From");
+                Date Date_to = rs.getDate("Date_to");
+                int cost = rs.getInt("Cost");
+                
+                Model.insertRow(Model.getRowCount(), new Object[]{ReservationID, Room_Type, Room_Number, CreditCard_Number, Date_From, Date_to, cost});
+            }
+
+        } catch (Exception c) {
+            c.printStackTrace();
+        }
+    }
+    private void readjoinrequestsintotable() {
+        DefaultTableModel Model;
+        Model = (DefaultTableModel) reserve1.getModel();
+        Model.setRowCount(0);
+        //Model.insertRow(Model.getRowCount(), new Object[]{"", "", "","", "", "", "", "", "", "", "","", ""});
+                //int id= Integer.parseInt(custid.getText());
+
+        String first = "";
+        String last = "";
+        String Street = "";
+        String City = "";
+        String Province = "";
+        String PC = "";
+        String Phone = "";
+        String Email = "";
+        int id = 0;
+        
+        String Customer = ""+ customer.getSelectedItem();
+        String[] name = Customer.split(" ");
+
+        String getcustomer = "select ID from Customer where First_Name= ? AND Last_Name= ? ";
+        String sqlor = "select * from Reservation inner join Customer on Customer = ID  where Customer= ? ";
+        try {
+            
+            
+        } catch (Exception c) {
+        }
+        
+
+        try {
+            
+            PreparedStatement pa = conn.prepareStatement(getcustomer);
+            pa.setString(1, name[0]);
+            pa.setString(2, name[1]);
+            ResultSet rs = pa.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt("ID");
+                
+            }
+            custid.setText(""+id);
+            
+            PreparedStatement pa1 = conn.prepareStatement(sqlor);
+            pa1.setInt(1,id);
+            ResultSet rs1 = pa1.executeQuery();
+
+            while (rs1.next()) {
+                //CUSTOMER DATA
+                id = rs1.getInt("ID");
+                first = rs1.getString("First_Name");
+                last = rs1.getString("Last_Name");
+                Street = rs1.getString("Street");
+                City = rs1.getString("City");
+                Province = rs1.getString("Province");
+                PC = rs1.getString("PC");
+                Phone = rs1.getString("Phone");
+                Email = rs1.getString("Email");
+                
+                // RESERVATIONS DATA
+                int ReservationID = rs1.getInt("ReservationID");
+                String Room_Type = rs1.getString("Room_Type");
+                String Room_Number = rs1.getString("Room_Number");
+                String CreditCard_Number = rs1.getString("CreditCard_Number");
+                String Expiry = rs1.getString("Expiry");
+                Date Date_From = rs1.getDate("Date_From");
+                Date Date_to = rs1.getDate("Date_to");
+                int cost = rs1.getInt("Cost");
+                System.out.println(Room_Number);
+                Model.insertRow(Model.getRowCount(), new Object[]{ReservationID, Room_Type, Room_Number, CreditCard_Number, Date_From, Date_to, cost});
+            }
+            custid.setText("" + id);
+            fname.setText(first);
+            lname.setText(last);
+            street1.setText(Street);
+            city1.setText(City);
+            prov1.setText(Province);
+            pc1.setText(PC);
+            phone1.setText(Phone);
+            email1.setText(Email);
+
+        } catch (Exception c) {
+            c.printStackTrace();
+        }
+    }
+    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -113,7 +263,6 @@ Connection conn = new DBconnect().connect();
         jLabel3 = new javax.swing.JLabel();
         street1 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        save = new javax.swing.JButton();
         prov1 = new javax.swing.JTextField();
         city1 = new javax.swing.JTextField();
         lname = new javax.swing.JTextField();
@@ -129,6 +278,8 @@ Connection conn = new DBconnect().connect();
         jScrollPane1 = new javax.swing.JScrollPane();
         reserve1 = new javax.swing.JTable();
         customer = new javax.swing.JComboBox();
+        custid = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
         jLabel1.setText("Search By Customer");
@@ -149,13 +300,6 @@ Connection conn = new DBconnect().connect();
         });
 
         jLabel11.setText("Address");
-
-        save.setText("Save");
-        save.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveActionPerformed(evt);
-            }
-        });
 
         prov1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -226,20 +370,25 @@ Connection conn = new DBconnect().connect();
             }
         });
 
-        jButton1.setText("Edit");
+        jButton1.setText("Save Changes");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         reserve1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Room No.", "Room Type", "Date From", "Date To", "Number Of Days"
+                "ID", "Room Type", "Room No.", "Credit Card Used", "Date From", "Date To", "Cost"
             }
         ));
         jScrollPane1.setViewportView(reserve1);
@@ -247,6 +396,15 @@ Connection conn = new DBconnect().connect();
         customer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 customerActionPerformed(evt);
+            }
+        });
+
+        custid.setText("jLabel4");
+
+        jButton2.setText("Delete Customer");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -263,45 +421,42 @@ Connection conn = new DBconnect().connect();
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(jLabel5)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(fname, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(lname, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel8)
                             .addComponent(jLabel11)
                             .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(street1, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(city1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(prov1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pc1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(phone1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(email1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(117, 117, 117)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addComponent(jLabel5)
+                        .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(custid)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(street1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(city1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(prov1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(pc1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(phone1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(email1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(fname, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)
+                                .addComponent(lname, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(97, 97, 97)
+                        .addComponent(jButton2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(247, 247, 247)
@@ -319,9 +474,11 @@ Connection conn = new DBconnect().connect();
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(33, 33, 33)
+                                .addComponent(custid)
+                                .addGap(11, 11, 11)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(fname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -343,13 +500,11 @@ Connection conn = new DBconnect().connect();
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(email1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel8))
-                                .addGap(15, 15, 15)
+                                .addGap(27, 27, 27)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(89, 89, 89)
-                                .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(54, 54, 54)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addComponent(jLabel1)
@@ -371,10 +526,6 @@ Connection conn = new DBconnect().connect();
     private void street1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_street1KeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_street1KeyTyped
-
-    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        // GetDatathenCheckandWriteDatabase();
-    }//GEN-LAST:event_saveActionPerformed
 
     private void prov1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prov1MouseClicked
         String prov = prov1.getText();
@@ -399,7 +550,7 @@ Connection conn = new DBconnect().connect();
     }//GEN-LAST:event_city1KeyTyped
 
     private void lnameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lnameFocusLost
-       autocapitalizefirstletter(lname);
+        autocapitalizefirstletter(lname);
     }//GEN-LAST:event_lnameFocusLost
 
     private void lnameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lnameMouseClicked
@@ -438,16 +589,157 @@ Connection conn = new DBconnect().connect();
     }//GEN-LAST:event_fnameMouseClicked
 
     private void customerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerActionPerformed
-        loadCustomerDetails();        // TODO add your handling code here:
+        int id=0 ;
+        int count=0;
+        String Customer = ""+ customer.getSelectedItem();
+        String[] name = Customer.split(" ");
+
+        String getcustomer = "select ID from Customer where First_Name= ? AND Last_Name= ? ";
+        try {
+            PreparedStatement pa = conn.prepareStatement(getcustomer);
+            pa.setString(1, name[0]);
+            pa.setString(2, name[1]);
+            ResultSet rs = pa.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt("ID");
+                
+            }
+            custid.setText(""+id);
+            
+            String countquery= "select count(Customer) as total from Reservation where Customer = ?";
+            PreparedStatement pa1 = conn.prepareStatement(countquery);
+            pa1.setString(1, name[0]);
+            pa1.setString(2, name[1]);
+            ResultSet rs1 = pa.executeQuery();
+            while (rs1.next()) {
+                count = rs1.getInt("total");
+                
+            }            
+        } catch (Exception c) {
+        }
+        
+ 
+        
+        if(count==0){
+        loadCustomerDetails();
+        readrequestsintotable();
+        } else{
+        readjoinrequestsintotable();
+        }
+// TODO add your handling code here:
     }//GEN-LAST:event_customerActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    String updatequery= "update Customer "
+            + "set First_Name = ?, Last_Name= ?, Street = ?, City = ?, Province = ?, PC = ?, Phone = ?, Email = ?"
+            + "where ID = ?";
+    
+    GetDatathenCheckandWriteDatabase(updatequery);
+            
+            
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    String deletequery= "delete from Customer where ID = ? ";
+        String Customer = ""+ customer.getSelectedItem();
+        String[] name = Customer.split(" ");
+
+        try {
+            PreparedStatement pa = conn.prepareStatement(deletequery);
+            pa.setInt(1, Integer.parseInt(custid.getText()));
+            int i = pa.executeUpdate();
+            if (i > 0) {
+                    JOptionPane.showMessageDialog((null), "DEleted");
+                } else {
+                    JOptionPane.showMessageDialog((null), "Nope");
+
+                }
+            
+        } catch (Exception c) {
+            c.printStackTrace();
+        }
+        loadCustomer();
+        load();
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+private void GetDatathenCheckandWriteDatabase(String query) {
+        //Get DATA from fields
+        String email = email1.getText();
+        Email useremail = new Email(email);
+        String valid = useremail.validateEmailAddress();
+        String firstname = fname.getText();
+        String lastname = lname.getText();
+        String phone = phone1.getText();
+        String street = street1.getText();
+        String city = city1.getText();
+        String prov = prov1.getText();
+        String pc = pc1.getText();
+        int id= Integer.parseInt(custid.getText());
+        
+        
+        //Check Validity
+        if (firstname.equals("") || firstname.equals("First")) {
+            JOptionPane.showMessageDialog(null, "First name is required");
+        }
+        if (lastname.equals("") || lastname.equals("Last")) {
+            JOptionPane.showMessageDialog(null, "Last name is required");
+        } else if (phone.equals("")) {
+            JOptionPane.showMessageDialog(null, "Phone no. is required");
+        } else if (street.equals("") || street.equals("Street")) {
+            JOptionPane.showMessageDialog(null, "Street is required");
+        } else if (city.equals("") || city.equals("City")) {
+            JOptionPane.showMessageDialog(null, "City is required");
+        } else if (prov.equals("") || prov.equals("Province")) {
+            JOptionPane.showMessageDialog(null, "Province is required");
+        } else if (pc.equals("") || pc.equals("Postal Code")) {
+            JOptionPane.showMessageDialog(null, "Postal Code is required");
+        } else if (valid.equals("Invalid Email Address")) {
+            JOptionPane.showMessageDialog(null, valid);
+        } else {
+            //Write
+            try {
+                PreparedStatement pa = conn.prepareStatement(query);
+
+                pa.setString(1, firstname);
+                pa.setString(2, lastname);
+                pa.setString(3, street);
+                pa.setString(4, city);
+                pa.setString(5, prov);
+                pa.setString(6, pc);
+                pa.setString(7, phone);
+                pa.setString(8, email);
+                pa.setInt(9, id);
+
+                int i = pa.executeUpdate();
+
+                if (i > 0) {
+                    JOptionPane.showMessageDialog((null), "saved");
+                } else {
+                    JOptionPane.showMessageDialog((null), "notsaved");
+
+                }
+            } catch (SQLException se) {
+                //Handle errors for JDBC
+                se.printStackTrace();
+            } catch (Exception e) {
+                //Handle errors for Class.forName
+                e.printStackTrace();
+            }
+          
+
+        }
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField city1;
+    private javax.swing.JLabel custid;
     private javax.swing.JComboBox customer;
     private javax.swing.JTextField email1;
     private javax.swing.JTextField fname;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -462,7 +754,6 @@ Connection conn = new DBconnect().connect();
     private javax.swing.JTextField phone1;
     private javax.swing.JTextField prov1;
     private javax.swing.JTable reserve1;
-    private javax.swing.JButton save;
     private javax.swing.JTextField street1;
     // End of variables declaration//GEN-END:variables
 }
