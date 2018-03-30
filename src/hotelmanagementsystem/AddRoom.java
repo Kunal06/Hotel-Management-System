@@ -205,7 +205,7 @@ public class AddRoom extends javax.swing.JPanel {
         } else {
             //Write
             try {
-                PreparedStatement pa = conn.prepareStatement("insert into Rooms(Room_No,Floor_No,Type,PricePerNight) values (?,?,?,?)");
+                PreparedStatement pa = conn.prepareStatement("insert into Room(Room_No,Floor_No,Type,PricePerNight) values (?,?,?,?)");
 
                 pa.setString(1, roomno);
                 pa.setString(2, floorno);
@@ -253,7 +253,7 @@ String roomno = roomno1.getText();
             
             available.setText("AVAILABLE");
             while (rs.next()) {
-                available.setText("Already Created");
+                available.setText("Already Exists");
                 break;
             }
         } catch (Exception c) {

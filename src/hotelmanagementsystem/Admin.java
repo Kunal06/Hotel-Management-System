@@ -79,7 +79,7 @@ public class Admin extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         AddEmployee = new javax.swing.JMenuItem();
         AddCustomer = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         AssignRoom = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
         CustomerSearch = new javax.swing.JMenuItem();
@@ -119,17 +119,22 @@ public class Admin extends javax.swing.JFrame {
         });
         jMenu4.add(AddCustomer);
 
-        jMenu5.setText("Add Room");
-        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu5MouseClicked(evt);
+        jMenuItem1.setText("Add Room");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenu5);
+        jMenu4.add(jMenuItem1);
 
         jMenuBar1.add(jMenu4);
 
         AssignRoom.setText("Assign Room");
+        AssignRoom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AssignRoomMouseClicked(evt);
+            }
+        });
         AssignRoom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AssignRoomActionPerformed(evt);
@@ -210,11 +215,6 @@ public class Admin extends javax.swing.JFrame {
         // new Loginpage().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_logoutMouseClicked
 
-    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
-        setContentPane(new AddRoom());
-        pack();     // TODO add your handling code here:
-    }//GEN-LAST:event_jMenu5MouseClicked
-
     private void AddEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddEmployeeActionPerformed
         setContentPane(new AddEmployee());
         pack();         // TODO add your handling code here:
@@ -242,6 +242,17 @@ public class Admin extends javax.swing.JFrame {
       setContentPane(new AssignRooms());
         pack();   // TODO add your handling code here:
     }//GEN-LAST:event_AssignRoomActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+       setContentPane(new AddRoom());
+        pack();  // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void AssignRoomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AssignRoomMouseClicked
+      setContentPane(new AssignRooms());
+        pack(); 
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AssignRoomMouseClicked
 
     /**
      * @param args the command line arguments
@@ -290,8 +301,8 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JLabel dat;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu logout;
     private javax.swing.JLabel name;
     private javax.swing.JLabel tim;
